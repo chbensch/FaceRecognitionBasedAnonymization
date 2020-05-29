@@ -1,2 +1,4 @@
 Data/
+pca.pkl
+weights.pkl
 .vscode/
