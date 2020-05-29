@@ -65,9 +65,11 @@ def cartoonify(img_rgb):
 
 # Main Video Loop
 while(True):
+
     # Capture frame-by-frame
     ret, frame = cam.read()
 
+    # create gray copy
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # Detect faces in the image
@@ -79,28 +81,55 @@ while(True):
         flags = cv2.CASCADE_SCALE_IMAGE
     )
 
+    # crop faces in here
     cropped=[]
+
+    # save original image
     noCartoon=[]
+
+    # build new frame
     frame2=[]
+
+    # create array for transform/prediction
     image_sequence= np.empty([6,2914])
+
+    # store names
     name={}
+
+    # cartoonify whole iamge
     frame2 = cartoonify(frame)
+
     # Draw a rectangle around the faces
     for i, (x, y, w, h) in enumerate(faces):
+        # coppy frame for further processing
         cropped.append(frame.copy())
         noCartoon.append(frame.copy())
+
+        # crop faces
         noCartoon[i] = noCartoon[i][y:y+h, x:x+w]
         cropped[i] = cropped[i][y:y+h, x:x+w]
+
+        # resize crop (cropsize) -> (47,62,3)
         cropped[i] = cv2.resize(cropped[i], (47,62))
+
+        # crop convert to grayscale (47,62,3) -> (47,62)
         cropped[i] = cv2.cvtColor(cropped[i], cv2.COLOR_BGR2GRAY)
+
         #print(cropped[i].flatten().shape)
         #print(image_sequence.shape)
+
+        # flatten the crop (47,62) -> (2914,)
         image_sequence[i] = np.array(cropped[i].flatten())
         #print(image_sequence.shape)
         #image_sequence = np.stack((image_sequence,image_sequence), axis=0)
 
+        # perform PCA transform
         frame_pca = pca.transform(image_sequence)
+
+        # predict Name 1vsAll
         frame_y = model.predict(frame_pca)
+
+        # the trained image has No 5, as the LFW dataset has 5 individuals (0-4)
         if frame_y[i] == 5:
             name[i] = 'Chris'
             frame2[y:y+h,x:x+w] = noCartoon[i]
@@ -110,6 +139,8 @@ while(True):
 
         # cartoon = cartoonify(cropped[i])
         # frame[y:y+h,x:x+w] = cartoon
+
+        # Put rectangle and name
         cv2.rectangle(frame2, (x, y), (x+w, y+h), (255, 0, 0), 2)
         cv2.putText(frame2, name[i], (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), thickness=3)
 
