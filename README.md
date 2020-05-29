@@ -1,6 +1,10 @@
 # Face Recognition based anonymization
 Face recognition based anonymization in video conferencing using Eigenfaces
 
+All necessary dependencies must be installed:
+
+`pip install -r requirements.txt`
+
 ## TL;DR
 First the crawler script is executed:
 
