@@ -16,7 +16,7 @@ if(len(sys.argv) == 2):
     name = sys.argv[1]
 else:
     print("no target person specified! taking Chris")
-    name= 'chris'
+    name= 'Chris'
 
 # Load own images
 print("Loading target images...")
