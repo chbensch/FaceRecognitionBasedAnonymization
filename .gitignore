@@ -1,4 +1,5 @@
 Data/
-pca.pkl
-weights.pkl
+# Ignore pickles
+*.pkl
+**/*.pkl
 .vscode/
