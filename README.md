@@ -1,2 +1,2 @@
-# FaceRecognitionBasedAnonymization
-Face recognition based anonymizationin video conferencing using Eigenfaces
+# Face Recognition based anonymization
+Face recognition based anonymization in video conferencing using Eigenfaces
