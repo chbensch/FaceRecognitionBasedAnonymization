@@ -19,9 +19,11 @@ else:
     name= 'chris'
 
 # Load own images
+print("Loading target images...")
 myX = np.loadtxt(open('Data/' + name + '.csv', "rb"), delimiter=",")
 
 # Load LFW Face Database
+print("Loading LFW Database... this step could take longer!")
 lfw_dataset = fetch_lfw_people(min_faces_per_person=100)
 
 # Init LFW Dataset 
