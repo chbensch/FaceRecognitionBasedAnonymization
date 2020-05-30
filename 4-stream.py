@@ -63,6 +63,9 @@ def cartoonify(img_rgb):
     result = cv2.bitwise_and(img_color, img_edge)
     return result
 
+# create array for transform/prediction
+image_sequence= np.random.random([6,2914])
+
 # Main Video Loop
 while(True):
 
@@ -89,9 +92,6 @@ while(True):
 
     # build new frame
     frame2=[]
-
-    # create array for transform/prediction
-    image_sequence= np.empty([6,2914])
 
     # store names
     name={}
